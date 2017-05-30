@@ -194,7 +194,11 @@ Possible options which I would test first if time would permit:
     - try using HUE / LIGHT channels with low values to detect black lines and combine with the current filter using NOT-condition. I'm thinking this would help properly ignoring the tar-stripes as in the second highway video.
  - Fitting 3rd order polynomial:
     - on the forest road video, the dashcam catches more than once curve in a frame.
- - more sanity checks:
+ - More sanity checks:
     - like too big offset of the center of the lane.
     - too small turn radius.
+ - Smooth modification of the polynomials:
+    - build polynomials on top of window of n-frames with gradually accumulating and "fading away" (as they get older) lane pixels deteced in last n-frames. This will allow wat more smooth detection of the lane, significantly improving the lane retention.
+ - Play with Hough Transform
+ - Train a convolutional neural network to produce custom, for current environment (rain, dusk, dawn, night, sun flares, etc), sets of parameters for color-space filtering and lane retention.
 
