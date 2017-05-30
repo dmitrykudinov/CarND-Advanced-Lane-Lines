@@ -61,14 +61,14 @@ In the second code cell I used the output `objpoints` and `imgpoints` to compute
 To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
 ![alt text][image2]
 
-Note the tree branches in the left-top corner of the image - these change the most after compensating for the camera's optical distortions. Looks like this particular camera has mostly radial distortions caused by imperfections of the lense.
+Note the tree branches in the left-top corner of the image - these change the most after compensating for the camera's optical distortions. Looks like this particular camera has mostly radial distortions caused by imperfections of the lens.
 
-The code which does undistort of all the test images is located in the 4th code cell. the `tst_images` from that moment on store all the undistorted test images which will be used in further processing.
+The code, which does undistort of all the test images is located in the 4th code cell. the `tst_images` from that moment on store all the undistorted test images which will be used in further processing.
 
 #### 2. Color space transformations.
-During my experiemtns I also tried various Degree and Magnitude filters, Light (HLS) channel, etc.
+During my experimetns, I also tried various Degree and Magnitude filters, Light (HLS) channel, etc.
 
-After a few various experiments combining different parameters, filters, channels, I decided to use SOBEL_X on Red channel, OR-combined with filterred SATURATION channel.
+After a few various experiments combining different parameters, filters, channels, I decided to use SOBEL_X on Red channel, OR-combined with filtered SATURATION channel.
 
 Here are some examples:
 
@@ -76,11 +76,11 @@ Here are some examples:
 
 ![alt text][image3] 
 
-- Good results were shown by filterred SATURATION channel: 
+- Good results were shown by filtered SATURATION channel: 
 
 ![alt text][image4]
 
-- Light channel is a promising one, but in time alloted, I didn't have a chance to find a good application for it, as it produces a lot of noise which needs to be filtered out through AND-combination with something else:
+- Light channel is a promising one, but in time allotted, I didn't have a chance to find a good application for it, as it produces a lot of noise which needs to be filtered out through AND-combination with something else:
 
 ![alt text][image5] 
 
@@ -132,19 +132,19 @@ Code cell 18 puts both the color space filter and perspective transform into a c
 
 #### 4. Identifying lane-line pixels and fitting their positions with a polynomial.
 
-For static test images, I used the sliding historgram approach suggested in the course materials. This code, with some minor tweaks is encapsulated in the `calc_lane_indexes()` method, code cell 21.
+For static test images, I used the sliding histogram approach suggested in the course materials. This code, with some minor tweaks is encapsulated in the `calc_lane_indexes()` method, code cell 21.
 
-Here is an example of a test picture, its lane lines pixels, and histogram of the buttom portion:
+Here is an example of a test picture, its lane lines pixels, and histogram of the bottom portion:
 
 ![alt text][image13] 
 ![alt text][image14] 
 
-Here is an example of applying this sliding historgram approach to another test image with a nice curve on it:
+Here is an example of applying this sliding histogram approach to another test image with a nice curve on it:
 
 ![alt text][image15] 
 
 
-Sliding histogram is a computationally expensive process, so in order to optimize when procesing video frames, I modified the logic a bit to use the previously known good line polynoms to search within a 50px margin: see the code cell 27 for more details.
+Sliding histogram is a computationally expensive process, so in order to optimize when processing video frames, I modified the logic a bit to use the previously known good line polynoms to search within a 50px margin: see the code cell 27 for more details.
 
 
 #### 5. Radius of curvature of the lane and the position of the vehicle with respect to center.
@@ -166,7 +166,7 @@ This was implemented in code cell 23:
 
 #### 1. Video output.
 
-Here's a [link to my video result](./project_video_output.mp4)
+Here's a [link to my video result](./project_video_output_aggregator.mp4)
 
 #### 2. Simplified lane search 
 
@@ -176,7 +176,7 @@ It also makes sense, in case newly detected lines don't pass sanity checks, to a
 
 This all was done in the code cell 27 using `Lane` class and `update_lane` method.
 
-The code cell 28 does some sanity check on whether this aggregation works: the same test image is fed twice to the video processing pipeline as two consequitve frames - as you can see the second frame's turn radius and offset metrics are pretty much identical to the first frame:
+The code cell 28 does some sanity check on whether this aggregation works: the same test image is fed twice to the video processing pipeline as two consecutive frames - as you can see the second frame's turn radius and offset metrics are pretty much identical to the first frame:
 
 
 ![alt text][image17] 
@@ -187,11 +187,11 @@ The code cell 28 does some sanity check on whether this aggregation works: the s
 
 #### 1. Problems with current implementation:
 
-Testing on harder videos provided along with the repo, I saw that the solution I built doesn't always correctly detects the lanes. Certainly more work is needed in both color-space filterring, and lane-retention sections:
+Testing on harder videos provided along with the repo, I saw that the solution I built doesn't always correctly detects the lanes. Certainly more work is needed in both color-space filtering, and lane-retention sections:
 
 Possible options which I would test first if time would permit:
- - Color space filterring:
-    - try using HUE / LIGHT channels with low values to detect black lines and combine with the current filter using NOT-condition. I'm thinking this would help properly ignorring the tar-stripes as in the second highway video.
+ - Color space filtering:
+    - try using HUE / LIGHT channels with low values to detect black lines and combine with the current filter using NOT-condition. I'm thinking this would help properly ignoring the tar-stripes as in the second highway video.
  - Fitting 3rd order polynomial:
     - on the forest road video, the dashcam catches more than once curve in a frame.
  - more sanity checks:
